@@ -20,10 +20,10 @@ public enum YandexHelper {
         List<ResolveInfo> infos = pm.queryIntentActivities(intent, 0);
 
         if (infos != null && infos.size() > 0) {
-            intent.putExtra("lat_from", 50.50165);
-            intent.putExtra("lon_from", 30.50225);
-            intent.putExtra("lat_to", 50.44656);
-            intent.putExtra("lon_to", 30.42504);
+            intent.putExtra("lat_from", from.getLat());
+            intent.putExtra("lon_from", from.getLng());
+            intent.putExtra("lat_to", to.getLat());
+            intent.putExtra("lon_to", to.getLng());
         }
 
         context.startActivity(intent);

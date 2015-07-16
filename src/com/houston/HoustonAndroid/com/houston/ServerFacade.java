@@ -26,7 +26,7 @@ import java.util.List;
 
 public enum ServerFacade {
     INSTANCE;
-    private static final String URL = "http://10.10.10.3/data";
+    private static final String URL = "http://82.193.123.105:8080/data";
 
     public JSONObject setKey(final String key, final String value) {
         try {
@@ -83,10 +83,10 @@ public enum ServerFacade {
                 builder.append(line).append("\n");
             }
             JSONTokener tokener = new JSONTokener(builder.toString());
-            JSONObject result = new JSONObject(tokener);
 
-            return result;
+            return new JSONObject(tokener);
         } catch (Throwable t) {
+            t.printStackTrace();
             return null;
         }
     }

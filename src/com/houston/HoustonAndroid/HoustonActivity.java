@@ -98,7 +98,6 @@ public class HoustonActivity extends Activity {
             if (gps != null) {
                 ServerFacade.INSTANCE.setKey("gps", gps.value.getLat() + ", " + gps.value.getLng());
             }
-            ServerFacade.INSTANCE.setKey("test", Math.random() + "");
 
             JSONObject response = ServerFacade.INSTANCE.getKey("destination", destination != null ? destination.time : 0);
             if (response != null) {
