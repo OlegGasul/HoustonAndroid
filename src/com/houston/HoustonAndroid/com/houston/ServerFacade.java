@@ -1,7 +1,5 @@
 package com.houston.HoustonAndroid.com.houston;
 
-import com.houston.HoustonAndroid.com.houston.model.GeoCoordinate;
-import com.houston.HoustonAndroid.com.houston.model.Item;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.NameValuePair;
@@ -12,13 +10,11 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.utils.URLEncodedUtils;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
-import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -26,7 +22,7 @@ import java.util.List;
 
 public enum ServerFacade {
     INSTANCE;
-    private static final String URL = "http://82.193.123.105:8080/data";
+    private static final String URL = "https://infinite-shelf-8651.herokuapp.com/data/";
 
     public JSONObject setKey(final String key, final String value) {
         try {
