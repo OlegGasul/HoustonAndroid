@@ -23,6 +23,7 @@ public class HoustonActivity extends Activity {
     private LocationManager locationManager;
 
     private volatile Item<GeoCoordinate> gps;
+    private volatile Item<Float> bearingItem;
     private volatile Item<GeoCoordinate> destination;
     private volatile boolean calculateRouteFlag = false;
 
@@ -33,11 +34,14 @@ public class HoustonActivity extends Activity {
         }
     }
 
-    public synchronized void setCurrentLocation(double gpsLat, double gpsLng) {
+    public synchronized void setCurrentLocation(double gpsLat, double gpsLng, float bearing) {
         if (gps == null)
             gps = new Item(new GeoCoordinate());
         gps.value.setLat(gpsLat);
         gps.value.setLng(gpsLng);
+
+        bearingItem = new Item(new Float(bearing));
+
         processRoute();
     }
 
@@ -55,7 +59,7 @@ public class HoustonActivity extends Activity {
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 100, 5, new LocationListener() {
             @Override
             public void onLocationChanged(Location location) {
-                setCurrentLocation(location.getLatitude(), location.getLongitude());
+                setCurrentLocation(location.getLatitude(), location.getLongitude(), location.getBearing());
             }
 
             @Override
@@ -71,6 +75,8 @@ public class HoustonActivity extends Activity {
             public void onReceive(Context c, Intent i) {
                 if (gps != null) {
                     ServerFacade.INSTANCE.setKey("gps", gps.value.getLat() + ", " + gps.value.getLng());
+                    if (bearingItem != null)
+                        ServerFacade.INSTANCE.setKey("bearing", bearingItem.value.toString());
                 }
 
                 JSONObject response = ServerFacade.INSTANCE.getKey("destination", destination != null ? destination.time : 0);
