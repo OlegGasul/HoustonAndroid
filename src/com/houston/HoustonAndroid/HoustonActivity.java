@@ -57,18 +57,13 @@ public class HoustonActivity extends Activity {
             public void onLocationChanged(Location location) {
                 setCurrentLocation(location.getLatitude(), location.getLongitude());
             }
-
+            
             @Override
-            public void onStatusChanged(String provider, int status, Bundle extras) {
-            }
-
+            public void onStatusChanged(String provider, int status, Bundle extras) { }
             @Override
-            public void onProviderEnabled(String provider) {
-            }
-
+            public void onProviderEnabled(String provider) { }
             @Override
-            public void onProviderDisabled(String provider) {
-            }
+            public void onProviderDisabled(String provider) { }
         });
 
         BroadcastReceiver br = new BroadcastReceiver() {
