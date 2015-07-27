@@ -57,7 +57,7 @@ public class HoustonActivity extends Activity {
             public void onLocationChanged(Location location) {
                 setCurrentLocation(location.getLatitude(), location.getLongitude());
             }
-            
+
             @Override
             public void onStatusChanged(String provider, int status, Bundle extras) { }
             @Override
