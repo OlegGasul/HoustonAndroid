@@ -11,6 +11,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.StrictMode;
 import com.houston.HoustonAndroid.com.houston.ServerFacade;
 import com.houston.HoustonAndroid.com.houston.helpers.YandexHelper;
 import com.houston.HoustonAndroid.com.houston.model.GeoCoordinate;
@@ -55,6 +56,9 @@ public class HoustonActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 100, 5, new LocationListener() {
             @Override
@@ -63,14 +67,19 @@ public class HoustonActivity extends Activity {
             }
 
             @Override
-            public void onStatusChanged(String provider, int status, Bundle extras) { }
+            public void onStatusChanged(String provider, int status, Bundle extras) {
+            }
+
             @Override
-            public void onProviderEnabled(String provider) { }
+            public void onProviderEnabled(String provider) {
+            }
+
             @Override
-            public void onProviderDisabled(String provider) { }
+            public void onProviderDisabled(String provider) {
+            }
         });
 
-        BroadcastReceiver br = new BroadcastReceiver() {
+        final BroadcastReceiver br = new BroadcastReceiver() {
             @Override
             public void onReceive(Context c, Intent i) {
                 if (gps != null) {
@@ -84,16 +93,30 @@ public class HoustonActivity extends Activity {
                     synchronized (HoustonActivity.class) {
                         destination = parseCoordinate(response);
                         calculateRouteFlag = true;
-                        processRoute();
                     }
                 }
+
+                processRoute();
             }
         };
-        registerReceiver(br, new IntentFilter("com.houston.HoustonAndroid"));
 
-        PendingIntent pi = PendingIntent.getBroadcast(this, 0, new Intent("com.houston.HoustonAndroid"), 0);
-        AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        am.setRepeating(AlarmManager.RTC, System.currentTimeMillis(), 1000, pi);
+        Thread thread = new Thread(new Runnable(){
+            @Override
+            public void run() {
+                try {
+                    registerReceiver(br, new IntentFilter("com.houston.HoustonAndroid"));
+
+                    PendingIntent pi = PendingIntent.getBroadcast(HoustonActivity.this, 0, new Intent("com.houston.HoustonAndroid"), 0);
+                    AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+                    am.setRepeating(AlarmManager.RTC, System.currentTimeMillis(), 1000, pi);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        thread.start();
+
     }
 
     private Item parseCoordinate(JSONObject jsonObject) {
