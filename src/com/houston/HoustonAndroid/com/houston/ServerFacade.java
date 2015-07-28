@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+
 public enum ServerFacade {
     INSTANCE;
     private static final String URL = "https://infinite-shelf-8651.herokuapp.com/data/";
