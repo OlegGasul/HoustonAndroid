@@ -5,7 +5,6 @@ import com.houston.HoustonAndroid.com.houston.model.Item;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-
 public enum GeoHelper {
     INSTANCE;
 

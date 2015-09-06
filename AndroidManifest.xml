@@ -29,5 +29,6 @@
         </activity>
 
         <receiver android:name="com.houston.HoustonAndroid.com.houston.AlarmReceiver" />
+        <service android:name=".com.houston.AlarmService" android:exported="false"/>
     </application>
 </manifest>

@@ -34,13 +34,13 @@ public class DataManager implements LocationListener {
         // todo remove
 //        gps = new Item(new GeoCoordinate(50.40196, 30.508));
 
-        locationManager = (LocationManager) HoustonActivity.instance().getSystemService(Context.LOCATION_SERVICE);
+        locationManager = (LocationManager) AlarmService.instance().getSystemService(Context.LOCATION_SERVICE);
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 100, 5, this);
     }
 
     private synchronized void processRoute() {
         if (gps != null && destination != null && calculateRouteFlag) {
-            YandexHelper.INSTANCE.calculateRoute(HoustonActivity.instance(), gps.value, destination.value);
+            YandexHelper.INSTANCE.calculateRoute(AlarmService.instance(), gps.value, destination.value);
             calculateRouteFlag = false;
         }
     }
