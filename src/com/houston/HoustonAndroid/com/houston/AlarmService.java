@@ -41,6 +41,6 @@ public class AlarmService extends IntentService {
         AlarmManager manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         if (pendingIntent != null)
             manager.cancel(pendingIntent);
-        manager.set(AlarmManager.RTC_WAKEUP, Calendar.getInstance().getTimeInMillis() + 3000, pendingIntent);
+        manager.set(AlarmManager.RTC_WAKEUP, Calendar.getInstance().getTimeInMillis() + 1500, pendingIntent);
     }
 }

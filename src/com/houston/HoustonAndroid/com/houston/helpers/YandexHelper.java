@@ -14,6 +14,7 @@ public enum YandexHelper {
 
     public void calculateRoute(Context context, GeoCoordinate from, GeoCoordinate to) {
         Intent intent = new Intent("ru.yandex.yandexnavi.action.BUILD_ROUTE_ON_MAP").setPackage("ru.yandex.yandexnavi");
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
         PackageManager pm = context.getPackageManager();
         List<ResolveInfo> infos = pm.queryIntentActivities(intent, 0);
